@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>طلب مشروب - استكانة</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section class="order-form">
+    <h2>اطلب مشروبك</h2>
+    <form id="orderForm">
+      <input type="text" name="customer_name" placeholder="اسمك" required>
+      <input type="text" name="drink" placeholder="نوع المشروب" required>
+      <input type="number" name="quantity" placeholder="الكمية" required min="1">
+      <textarea name="notes" placeholder="ملاحظات (اختياري)"></textarea>
+      <button type="submit">send order</button>
+    </form>
+  </section>
+  <div class="back-btn-container">
+    <a href="index.html" class="main-btn"> Back Home</a>
+  </div>
+  
+
+  <script>
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+
+      fetch("backend/add_order.php", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(data => {
+        alert(data);
+        this.reset();
+      });
+    });
+  </script>
+</body>
+</html>
